@@ -16,3 +16,26 @@ services:
     environment:
       MINIO_ROOT_USER: user
       MINIO_ROOT_PASSWORD: password
+
+  practice270324.storage.azure.blob:
+    container_name: practice270324.storage.azure.blob
+    image: mcr.microsoft.com/azure-storage/azure-storage-emulator
+    ports:
+      - "10000:10000"
+      - "10001:10001"
+      - "10002:10002"
+      - "10003:10003"
+      - "10004:10004"
+      - "10005:10005"
+    environment:
+      - ACCEPT_EULA=Y
+      - AZURE_STORAGE_DEVELOPMENT_STORAGE=true
+      - ACCOUNT_NAME=user
+      - ACCOUNT_KEY=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==
+    volumes:
+      - azure-storage-emulator-data:/opt/azure-storage-emulator/data
+      - azure-storage-emulator-logs:/opt/azure-storage-emulator/logs
+
+  volumes:
+    azure-storage-emulator-data:
+    azure-storage-emulator-logs:
