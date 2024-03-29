@@ -30,7 +30,7 @@ public class UploadFileController {
         response.setContentType(file.getContentType());
         response.setSize(file.getSize());
 
-        response.setFileUrl(storageService.disk(DriverEnum.LOCAL).put(bucketName, file.getOriginalFilename(), file));
+        response.setFileUrl(storageService.disk(DriverEnum.BLOB).put(bucketName, file.getOriginalFilename(), file));
 
         return ResponseEntity.ok(response);
     }

@@ -1,9 +1,7 @@
 package com.ua.project.practice_270324_java_springboot.services;
 
-import com.ua.project.practice_270324_java_springboot.drivers.storages.DriverEnum;
-import com.ua.project.practice_270324_java_springboot.drivers.storages.LocalStorageDriver;
-import com.ua.project.practice_270324_java_springboot.drivers.storages.MinioStorageDriver;
-import com.ua.project.practice_270324_java_springboot.drivers.storages.StorageDriver;
+import com.ua.project.practice_270324_java_springboot.drivers.storages.*;
+import com.ua.project.practice_270324_java_springboot.utils.DotEnvExtractor;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -33,8 +31,9 @@ public class StorageService {
     public void initialize() {
         DRIVERS.put(DriverEnum.LOCAL, new LocalStorageDriver(localStoragePath));
         DRIVERS.put(DriverEnum.MINIO, new MinioStorageDriver(minioUrl, minioUser, minioPassword));
+        DRIVERS.put(DriverEnum.BLOB, new AzureStorageDriver(DotEnvExtractor.extractLineByAttributeName("AZURE_BLOB_CONNECTION_STRING")));
 
-        storageDriver = DRIVERS.get(DriverEnum.MINIO);
+        storageDriver = DRIVERS.get(DriverEnum.BLOB);
     }
 
     public StorageDriver disk(DriverEnum disk) {
