@@ -1,5 +1,6 @@
 package com.ua.project.practice_270324_java_springboot.controllers;
 
+import com.ua.project.practice_270324_java_springboot.drivers.storages.DriverEnum;
 import com.ua.project.practice_270324_java_springboot.responces.UploadFileResponse;
 import com.ua.project.practice_270324_java_springboot.services.StorageService;
 import lombok.AllArgsConstructor;
@@ -29,7 +30,7 @@ public class UploadFileController {
         response.setContentType(file.getContentType());
         response.setSize(file.getSize());
 
-        response.setFileUrl(storageService.put(bucketName, file.getOriginalFilename(), file));
+        response.setFileUrl(storageService.disk(DriverEnum.LOCAL).put(bucketName, file.getOriginalFilename(), file));
 
         return ResponseEntity.ok(response);
     }
